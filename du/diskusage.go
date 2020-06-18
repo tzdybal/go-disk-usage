@@ -2,18 +2,18 @@
 
 package du
 
-import "syscall"
+import "golang.org/x/sys/unix"
 
 type DiskUsage struct {
-	stat *syscall.Statfs_t
+	stat *unix.Statfs_t
 }
 
 // Returns an object holding the disk usage of volumePath
 // This function assumes volumePath is a valid path
 func NewDiskUsage(volumePath string) *DiskUsage {
 
-	var stat syscall.Statfs_t
-	syscall.Statfs(volumePath, &stat)
+	var stat unix.Statfs_t
+	unix.Statfs(volumePath, &stat)
 	return &DiskUsage{&stat}
 }
 
@@ -24,7 +24,7 @@ func (this *DiskUsage) Free() uint64 {
 
 // Total available bytes on file system to an unpriveleged user
 func (this *DiskUsage) Available() uint64 {
-	return this.stat.Bavail * uint64(this.stat.Bsize)
+	return uint64(this.stat.Bavail) * uint64(this.stat.Bsize)
 }
 
 // Total size of the file system
