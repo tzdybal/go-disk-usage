@@ -2,16 +2,18 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/tzdybal/go-disk-usage/du"
 )
 
-var KB = uint64(1024)
+// KiB is a number of bytes in Kibibyte
+const KiB = uint64(1024)
 
 func main() {
-	usage := du.NewDiskUsage("C:\\")
-	fmt.Println("Free:", usage.Free()/(KB*KB))
-	fmt.Println("Available:", usage.Available()/(KB*KB))
-	fmt.Println("Size:", usage.Size()/(KB*KB))
-	fmt.Println("Used:", usage.Used()/(KB*KB))
+	usage := du.NewDiskUsage("/")
+	fmt.Println("Free:", usage.Free()/(KiB*KiB))
+	fmt.Println("Available:", usage.Available()/(KiB*KiB))
+	fmt.Println("Size:", usage.Size()/(KiB*KiB))
+	fmt.Println("Used:", usage.Used()/(KiB*KiB))
 	fmt.Println("Usage:", usage.Usage()*100, "%")
 }
