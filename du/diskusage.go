@@ -24,8 +24,10 @@ func (du *DiskUsage) Free() uint64 {
 	return du.stat.Bfree * uint64(du.stat.Bsize)
 }
 
-// Available returns total available bytes on file system to an unpriveleged user
+// Available returns total available bytes on file system to an unprivileged user
 func (du *DiskUsage) Available() uint64 {
+	// first cast is required for FreeBSD compatibility
+	// on Linux is unnecessary
 	return uint64(du.stat.Bavail) * uint64(du.stat.Bsize)
 }
 
